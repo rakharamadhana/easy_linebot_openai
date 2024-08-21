@@ -8,13 +8,13 @@ from linebot.exceptions import (
 )
 from linebot.models import *
 
-#======python的函數庫==========
+#====== Python Libraries ==========
 import tempfile, os
 import datetime
 import openai
 import time
 import traceback
-#======python的函數庫==========
+#====== Python Libraries ==========
 
 app = Flask(__name__)
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
@@ -22,15 +22,15 @@ static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 # Channel Secret
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
-# OPENAI API Key初始化設定
+# OPENAI API Key
 openai.api_key = os.getenv('OPENAI_API_KEY')
 
 
 def GPT_response(text):
     response = openai.ChatCompletion.create(
-        model="gpt-4o-mini",
+        model="ft:gpt-4o-mini-2024-07-18:ppln-taipei:ntust-restaurant:9ybxSIIJ",  # Ensure this model name is correct
         messages=[
-            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "system", "content": "You are a helpful assistant providing menu information for NTUST."},
             {"role": "user", "content": text},
         ],
         temperature=0.5,
@@ -41,7 +41,7 @@ def GPT_response(text):
     return answer
 
 
-# 監聽所有來自 /callback 的 Post Request
+# Listen for all POST requests coming to /callback
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -57,7 +57,7 @@ def callback():
     return 'OK'
 
 
-# 處理訊息
+# Handle message events
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     msg = event.message.text
@@ -67,8 +67,8 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, TextSendMessage(GPT_answer))
     except:
         print(traceback.format_exc())
-        line_bot_api.reply_message(event.reply_token, TextSendMessage('你所使用的OPENAI API key額度可能已經超過，請於後台Log內確認錯誤訊息'))
-        
+        line_bot_api.reply_message(event.reply_token, TextSendMessage('The OPENAI API key limit you are using may have exceeded. Please confirm the error message in the background log.'))
+
 
 @handler.add(PostbackEvent)
 def handle_message(event):
@@ -81,10 +81,10 @@ def welcome(event):
     gid = event.source.group_id
     profile = line_bot_api.get_group_member_profile(gid, uid)
     name = profile.display_name
-    message = TextSendMessage(text=f'{name}歡迎加入')
+    message = TextSendMessage(text=f'{name}, welcome to the group!')
     line_bot_api.reply_message(event.reply_token, message)
         
-        
+
 import os
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
