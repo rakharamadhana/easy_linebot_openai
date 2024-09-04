@@ -119,3 +119,9 @@ This is a Flask application integrated with LINE Messaging API and OpenAI's GPT 
 
 - 部署後，應用程式會自動回應發送到您 LINE 機器人的文字訊息，使用 OpenAI 的 GPT 模型。
 - Postback 事件和新成員加入也會自動處理。
+
+---
+
+### Credits
+
+This project is originally made by [maso0310/linebot_openai](https://github.com/maso0310/linebot_openai).
