@@ -124,4 +124,4 @@ This is a Flask application integrated with LINE Messaging API and OpenAI's GPT 
 
 ### Credits
 
-This project is originally made by [maso0310/linebot_openai](https://github.com/maso0310/linebot_openai).
+This modified project is originally made by [maso0310/linebot_openai](https://github.com/maso0310/linebot_openai).
