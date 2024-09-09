@@ -29,6 +29,9 @@ handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 openai_model = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')  # 如果沒有設定環境變數，則使用預設模型名稱
 # Provide a default if the environment variable isn't set
 
+# Fetch the system content from environment variables, with a fallback default value
+system_content = os.getenv('OPENAI_SYSTEM_CONTENT', 'You are a helpful assistant.')
+
 # 設定 OpenAI API 密鑰
 # Set OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -42,7 +45,7 @@ def get_gpt_response(user_text):
             # 指定使用的 GPT 模型
             # Specify the GPT model to use
             messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
+                {"role": "system", "content": system_content},
                 # 系統訊息：設定助手的角色和內容
                 # System message: Define the role and content of the assistant
                 {"role": "user", "content": user_text},  # 使用者訊息
