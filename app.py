@@ -24,6 +24,11 @@ static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 line_bot_api = LineBotApi(os.getenv('CHANNEL_ACCESS_TOKEN'))
 handler = WebhookHandler(os.getenv('CHANNEL_SECRET'))
 
+# 從環境變數中獲取 OpenAI 模型名稱
+# Fetch the OpenAI model name from the environment variables
+openai_model = os.getenv('OPENAI_MODEL', 'gpt-4o-mini')  # 如果沒有設定環境變數，則使用預設模型名稱
+# Provide a default if the environment variable isn't set
+
 # 設定 OpenAI API 密鑰
 # Set OpenAI API key
 openai.api_key = os.getenv('OPENAI_API_KEY')
@@ -33,7 +38,7 @@ def get_gpt_response(user_text):
     """Generate a response from OpenAI GPT model."""
     try:
         response = openai.ChatCompletion.create(
-            model="ft:gpt-4o-mini-2024-07-18:ppln-taipei:ntust-restaurant:9ybxSIIJ",
+            model=openai_model,
             # 指定使用的 GPT 模型
             # Specify the GPT model to use
             messages=[
