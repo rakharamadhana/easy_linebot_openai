@@ -42,7 +42,7 @@ def get_gpt_response(user_text):
             # 指定使用的 GPT 模型
             # Specify the GPT model to use
             messages=[
-                {"role": "system", "content": "You are a helpful assistant providing menu information for NTUST."},
+                {"role": "system", "content": "You are a helpful assistant."},
                 # 系統訊息：設定助手的角色和內容
                 # System message: Define the role and content of the assistant
                 {"role": "user", "content": user_text},  # 使用者訊息
